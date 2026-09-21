@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Approval - IT-SALMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7fc;
+            color: #222;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #ffffff;
+            border-right: 1px solid #e5e5ef;
+            padding: 20px 12px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px 25px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #5b35d5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #25234a;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 5px 0;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #55536b;
+            font-size: 13px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #eee9ff;
+            color: #5632d5;
+        }
+
+        .menu-icon {
+            width: 18px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+        }
+
+        .table-card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .table-card h2 {
+            font-size: 18px;
+            color: #29264c;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            color: #888;
+            padding: 10px 8px;
+            border-bottom: 2px solid #f0f0f5;
+        }
+
+        td {
+            font-size: 13px;
+            padding: 12px 8px;
+            border-bottom: 1px solid #f0f0f5;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .remark-input {
+            width: 120px;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .approve-btn {
+            background-color: #1e8e3e;
+        }
+
+        .approve-btn:hover {
+            background-color: #176b2f;
+        }
+
+        .reject-btn {
+            background-color: #c0392b;
+        }
+
+        .reject-btn:hover {
+            background-color: #992d22;
+        }
+
+        .empty-message {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 70px;
+            }
+            .logo-text,
+            .menu a span:not(.menu-icon) {
+                display: none;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            table {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-text">IT-SALMS</div>
+        </div>
+
+        <ul class="menu">
+            <li><a href="{% url 'faculty_dashboard' %}"><span class="menu-icon">⌂</span><span>Dashboard</span></a></li>
+            <li><a href="{% url 'leave_approval' %}" class="active"><span class="menu-icon">📝</span><span>Leave Approval</span></a></li>
+            <li><a href="{% url 'certificate_verification' %}"><span class="menu-icon">📜</span><span>Certificate Verification</span></a></li>
+            <li><a href="{% url 'faculty_profile' %}"><span class="menu-icon">👤</span><span>Profile</span></a></li>
+            <li><a href="{% url 'logout' %}"><span class="menu-icon">↪</span><span>Logout</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="table-card">
+            <h2>Leave Applications</h2>
+
+            {% if pending_leaves %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>Activity</th>
+                        <th>Type</th>
+                        <th>From - To</th>
+                        <th>Reason</th>
+                        <th>Remark</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in pending_leaves %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ leave.student.full_name }}</td>
+                        <td>{{ leave.activity.activity_name }}</td>
+                        <td>{{ leave.activity.activity_type }}</td>
+                        <td>{{ leave.leave_start }} to {{ leave.leave_end }}</td>
+                        <td>{{ leave.reason }}</td>
+                        <td>
+                            <form method="POST" style="display:flex; gap:5px; align-items:center;">
+                                {% csrf_token %}
+                                <input type="hidden" name="leave_id" value="{{ leave.leave_id }}">
+                                <input type="text" name="remark" class="remark-input" placeholder="Optional remark">
+                        </td>
+                        <td>
+                                <button type="submit" name="action" value="approve" class="action-btn approve-btn">✓</button>
+                                <button type="submit" name="action" value="reject" class="action-btn reject-btn">✗</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty-message">No pending leave applications.</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+/* ================================
+   RIT IT DEPARTMENT LOGIN
+   ================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef4fb, #dce9f7);
+    color: #1f2937;
+}
+
+
+/* Main page */
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ================================
+   COLLEGE HEADER
+   ================================ */
+
+.college-header {
+    width: 100%;
+    background: #ffffff;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    border-bottom: 4px solid #174ea6;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* RIT Logo */
+
+.rit-logo {
+    width: 105px;
+    height: 105px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+
+/* College information */
+
+.college-info {
+    text-align: left;
+}
+
+.college-info h1 {
+    font-size: 28px;
+    color: #174ea6;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.college-info h2 {
+    margin-top: 6px;
+    font-size: 19px;
+    color: #333333;
+    font-weight: 600;
+}
+
+.college-info p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666666;
+}
+
+
+/* ================================
+   LOGIN AREA
+   ================================ */
+
+.login-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 20px;
+}
+
+
+/* Login card */
+
+.login-box {
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    padding: 38px 40px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(23, 78, 166, 0.15);
+    border: 1px solid #e5e7eb;
+}
+
+
+/* Heading */
+
+.login-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-heading h2 {
+    color: #174ea6;
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.login-heading p {
+    color: #777777;
+    font-size: 15px;
+}
+
+
+/* ================================
+   FORM
+   ================================ */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+
+/* Inputs */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #f9fafb;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+
+/* Focus */
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #174ea6;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(23, 78, 166, 0.12);
+}
+
+
+/* ================================
+   FORGOT PASSWORD
+   ================================ */
+
+.forgot-password {
+    text-align: right;
+    margin-top: -5px;
+    margin-bottom: 22px;
+}
+
+.forgot-password a {
+    color: #174ea6;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   LOGIN BUTTON
+   ================================ */
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #174ea6;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.login-btn:hover {
+    background: #123d82;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(23, 78, 166, 0.25);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+
+/* ================================
+   ERROR MESSAGE
+   ================================ */
+
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 11px 13px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+/* ================================
+   FOOTER
+   ================================ */
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+footer p {
+    color: #777777;
+    font-size: 13px;
+}
+
+
+/* ================================
+   MOBILE RESPONSIVE
+   ================================ */
+
+@media (max-width: 700px) {
+
+    .college-header {
+        padding: 18px 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .college-info {
+        text-align: center;
+    }
+
+    .college-info h1 {
+        font-size: 21px;
+    }
+
+    .college-info h2 {
+        font-size: 16px;
+    }
+
+    .rit-logo {
+        width: 85px;
+        height: 85px;
+    }
+
+    .login-container {
+        padding: 30px 15px;
+    }
+
+    .login-box {
+        padding: 30px 22px;
+    }
+
+    .login-heading h2 {
+        font-size: 24px;
+    }
+}
+.create-account-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 12px;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #1f5f8b;
+    border-radius: 6px;
+    color: #1f5f8b;
+    background: white;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.create-account-btn:hover {
+    background: #1f5f8b;
+    color: white;
+}
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 45px;
+}
+
+.password-eye {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    z-index: 10;
+}
+
+.password-eye:hover {
+    color: #222;
+}

@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IT Department - Login</title>
+
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- Header -->
+        <header class="college-header">
+
+            <img src="{% static 'images/ritlogo.jfif' %}"
+                 alt="RIT Logo"
+                 class="rit-logo">
+
+            <div class="college-info">
+                <h1>DEPARTMENT OF INFORMATION TECHNOLOGY</h1>
+                <h2>RAJARAMBAPU INSTITUTE OF TECHNOLOGY</h2>
+                <p>Rajaramnagar, Maharashtra</p>
+            </div>
+
+        </header>
+
+
+        <!-- Login Section -->
+        <main class="login-container">
+
+            <div class="login-box">
+
+                <div class="login-heading">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to continue</p>
+                </div>
+
+
+                {% if error %}
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- Role -->
+                    <div class="form-group">
+
+                        <label for="role">Select Role</label>
+
+                        <select name="role" id="role" required>
+                            <option value="" disabled selected>
+                                Select your role
+                            </option>
+
+                            <option value="STUDENT">
+                                Student
+                            </option>
+
+                            <option value="FACULTY">
+                                Faculty
+                            </option>
+
+                            <option value="ADMIN">
+                                Admin
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <!-- Username -->
+                    <div class="form-group">
+
+                        <label for="username">
+                            Email / Username
+                        </label>
+
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            placeholder="Enter your email or username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <!-- ADDED: password wrapper -->
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                            <!-- ADDED: eye icon -->
+                            <span class="password-eye" onclick="togglePassword()">
+                                👁
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Forgot Password -->
+                    <div class="forgot-password">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-btn">
+                        LOGIN
+                    </button>
+
+                    <a href="{% url 'create_account' %}" class="create-account-btn">
+                        Create Account
+                    </a>
+
+                </form>
+
+            </div>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 Department of Information Technology, RIT</p>
+        </footer>
+
+    </div>
+   <script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const eye = document.querySelector(".password-eye");
+
+        if (password.type === "password") {
+            password.type = "text";
+            eye.textContent = "👁";
+        } else {
+            password.type = "password";
+            eye.textContent = "👁";
+        }
+    }
+</script>
+</script>
+</body>
+</html>

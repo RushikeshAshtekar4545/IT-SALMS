@@ -1,0 +1,405 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Certificate - IT-SALMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7fc;
+            color: #222;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #ffffff;
+            border-right: 1px solid #e5e5ef;
+            padding: 20px 12px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px 25px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #5b35d5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #25234a;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 5px 0;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #55536b;
+            font-size: 13px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #eee9ff;
+            color: #5632d5;
+        }
+
+        .menu-icon {
+            width: 18px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 550px;
+            height: fit-content;
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            color: #29264c;
+            margin-bottom: 4px;
+        }
+
+        .form-card p.subtitle {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+        }
+
+        .file-hint {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        #student-details {
+            margin-top: 20px;
+            padding: 18px;
+            background: #f8f7ff;
+            border: 1px solid #e6e1ff;
+            border-radius: 8px;
+        }
+
+        #student-details h3 {
+            font-size: 15px;
+            color: #5632d5;
+            margin-bottom: 15px;
+        }
+
+        #student-details input {
+            background: #f5f5f5;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #5632d5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #4526b0;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #999;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .cancel-btn:hover {
+            background-color: #777;
+        }
+
+        .error-message {
+            background-color: #fdecea;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo-section">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-text">IT-SALMS</div>
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="{% url 'dashboard_redirect' %}">
+                    <span class="menu-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'apply_leave' %}">
+                    <span class="menu-icon">📝</span>
+                    <span>Apply Leave</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_applications' %}">
+                    <span class="menu-icon">📋</span>
+                    <span>My Applications</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_activities' %}">
+                    <span class="menu-icon">🏆</span>
+                    <span>My Activities</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'upload_certificate' %}" class="active">
+                    <span class="menu-icon">📤</span>
+                    <span>Upload Certificate</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'my_certificates' %}">
+                    <span class="menu-icon">📜</span>
+                    <span>My Certificates</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="menu-icon">💼</span>
+                    <span>My Portfolio</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="menu-icon">👤</span>
+                    <span>Profile</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'logout' %}">
+                    <span class="menu-icon">↪</span>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="form-card">
+
+            <h2>Upload Certificate</h2>
+
+            <p class="subtitle">
+                Select the activity and upload your certificate
+            </p>
+
+            {% if error %}
+                <div class="error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% if not show_confirm %}
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="activity_id">
+                        Activity
+                    </label>
+
+                    <select name="activity_id" id="activity_id" required>
+                        <option value="">
+                            Select Activity
+                        </option>
+
+                        {% for activity in student_activities %}
+                        <option value="{{ activity.activity_id }}">
+                            {{ activity.activity_name }}
+                            ({{ activity.activity_type }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="certificate_file">
+                        Upload Certificate
+                    </label>
+
+                    <input
+                        type="file"
+                        name="certificate_file"
+                        id="certificate_file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        required>
+
+                    <p class="file-hint">
+                        Only PDF, JPG, PNG files allowed
+                    </p>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Extract & Preview
+                </button>
+
+            </form>
+
+            {% endif %}
+
+            {% if show_confirm %}
+
+            <div id="student-details">
+                <h3>Extracted Student Details</h3>
+
+                <div class="form-group">
+                    <label>Participant Name</label>
+                    <input type="text" value="{{ extracted_name }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>PRN</label>
+                    <input type="text" value="{{ extracted_prn }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input type="text" value="{{ extracted_branch }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" value="{{ extracted_year }}" readonly>
+                </div>
+            </div>
+
+            <form method="POST" action="{% url 'confirm_certificate' %}">
+                {% csrf_token %}
+                <button type="submit" class="submit-btn">
+                    Confirm & Save
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'cancel_certificate' %}">
+                {% csrf_token %}
+                <button type="submit" class="cancel-btn">
+                    Cancel
+                </button>
+            </form>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

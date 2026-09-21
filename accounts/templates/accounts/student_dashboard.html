@@ -1,0 +1,438 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - IT-SALMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7fc;
+            color: #222;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #ffffff;
+            border-right: 1px solid #e5e5ef;
+            padding: 20px 12px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px 25px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #5b35d5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #25234a;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 5px 0;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #55536b;
+            font-size: 13px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #eee9ff;
+            color: #5632d5;
+        }
+
+        .menu-icon {
+            width: 18px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            overflow-x: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 19px;
+            color: #25234a;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .profile-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #5632d5;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #eee9ff;
+            color: #5632d5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-card h3 {
+            font-size: 20px;
+            color: #222;
+            margin-bottom: 3px;
+        }
+
+        .stat-card p {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1.2fr;
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 15px;
+            color: #29264c;
+        }
+
+        .view-all {
+            font-size: 11px;
+            color: #5632d5;
+            text-decoration: none;
+        }
+
+        .leave-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f0f5;
+            font-size: 12px;
+        }
+
+        .leave-row:last-child {
+            border-bottom: none;
+        }
+
+        .leave-number {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f5;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #f0ebff;
+            color: #5632d5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .activity-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .activity-date {
+            font-size: 10px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .tag {
+            font-size: 9px;
+            padding: 4px 7px;
+            border-radius: 5px;
+            background: #eee9ff;
+            color: #5632d5;
+        }
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 70px;
+            }
+            .logo-text,
+            .menu a span:not(.menu-icon) {
+                display: none;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-text">IT-SALMS</div>
+        </div>
+
+        <ul class="menu">
+            <li><a href="#" class="active"><span class="menu-icon">⌂</span><span>Dashboard</span></a></li>
+            <li><a href="{% url 'apply_leave' %}"><span class="menu-icon">📝</span><span>Apply Leave</span></a></li>
+            <li><a href="{% url 'my_applications' %}"><span class="menu-icon">📋</span><span>My Applications</span></a></li>
+            <li><a href="{% url 'my_activities' %}"><span class="menu-icon">🏆</span><span>My Activities</span></a></li>
+            <li><a href="{% url 'upload_certificate' %}"><span class="menu-icon">📤</span><span>Upload Certificate</span></a></li>
+            <li><a href="{% url 'my_certificates' %}"><span class="menu-icon">📜</span><span>My Certificates</span></a></li>
+            <li><a href="{% url 'my_portfolio' %}"><span class="menu-icon">💼</span><span>My Portfolio</span></a></li>
+            <li><a href="{% url 'profile' %}"><span class="menu-icon">👤</span><span>Profile</span></a></li>
+            <li><a href="{% url 'logout' %}"><span class="menu-icon">↪</span><span>Logout</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="topbar">
+            <div class="welcome">
+                <h2>Hello, {{ student_name }} 👋</h2>
+                <p>Welcome to your dashboard</p>
+            </div>
+            <div class="top-right">
+                <div class="notification">🔔</div>
+                <div class="profile-circle">{{ initials }}</div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div><h3>{{ hackathon_count }}</h3><p>Hackathons</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🧑‍🏫</div>
+                <div><h3>{{ workshop_count }}</h3><p>Workshops</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div><h3>{{ event_count }}</h3><p>Events</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📜</div>
+                <div><h3>{{ certificate_count }}</h3><p>Certificates</p></div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Leave Status</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                <div class="leave-row">
+                    <span>Pending</span>
+                    <span class="leave-number">{{ pending_count }}</span>
+                </div>
+                <div class="leave-row">
+                    <span>Approved</span>
+                    <span class="leave-number">{{ approved_count }}</span>
+                </div>
+                <div class="leave-row">
+                    <span>Rejected</span>
+                    <span class="leave-number">{{ rejected_count }}</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Activities</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                {% for activity in recent_activities %}
+                <div class="activity-item">
+                    <div class="activity-left">
+                        <div class="activity-icon">
+                            {% if activity.activity_type == 'Hackathon' %}🏆
+                            {% elif activity.activity_type == 'Workshop' %}🧑‍🏫
+                            {% else %}📅
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="activity-name">{{ activity.activity_name }}</div>
+                            <div class="activity-date">{{ activity.start_date }}</div>
+                        </div>
+                    </div>
+                    <span class="tag">{{ activity.activity_type }}</span>
+                </div>
+                {% empty %}
+                <p style="color:#999; font-size:12px;">No recent activities yet.</p>
+                {% endfor %}
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Upcoming Activities</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                {% for activity in upcoming_activities %}
+                <div class="activity-item">
+                    <div class="activity-left">
+                        <div class="activity-icon">
+                            {% if activity.activity_type == 'Hackathon' %}🏆
+                            {% elif activity.activity_type == 'Workshop' %}🧑‍🏫
+                            {% else %}📅
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="activity-name">{{ activity.activity_name }}</div>
+                            <div class="activity-date">{{ activity.start_date }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color:#999; font-size:12px;">No upcoming activities.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

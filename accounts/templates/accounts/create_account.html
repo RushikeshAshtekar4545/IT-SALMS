@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account - SALMS</title>
+
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+
+    <style>
+        .register-box {
+            width: 430px;
+        }
+
+        .rit-logo {
+            width: 85px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .department {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .system-name {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+            opacity: 0.75;
+        }
+
+        .error-message {
+            background: #ffe5e5;
+            color: #b00020;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .back-login {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-login a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-box register-box">
+
+        <!-- RIT LOGO -->
+        <img
+            src="{% static 'images/ritlogo.jfif' %}"
+            alt="RIT Logo"
+            class="rit-logo"
+        >
+
+        <div class="department">
+            Department of Information Technology
+        </div>
+
+        <div class="system-name">
+            SALMS - Student Activity & Leave Management System
+        </div>
+
+        <h2>Create Account</h2>
+
+        <p class="subtitle">
+            Register using your existing college record
+        </p>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- ROLE -->
+            <div class="form-group">
+                <label for="role">Select Role</label>
+
+                <select
+                    name="role"
+                    id="role"
+                    required
+                    onchange="changeIdentifier()"
+                >
+                    <option value="STUDENT"
+                        {% if role == 'STUDENT' %}selected{% endif %}>
+                        Student
+                    </option>
+
+                    <option value="FACULTY"
+                        {% if role == 'FACULTY' %}selected{% endif %}>
+                        Faculty
+                    </option>
+                </select>
+            </div>
+
+            <!-- PRN / EMPLOYEE ID -->
+            <div class="form-group">
+
+                <label id="identifier-label" for="identifier">
+                    PRN
+                </label>
+
+                <input
+                    type="text"
+                    name="identifier"
+                    id="identifier"
+                    placeholder="Enter your PRN"
+                    value="{{ identifier|default:'' }}"
+                    required
+                >
+
+                <small>
+                    Enter the ID already registered with the college.
+                </small>
+
+            </div>
+
+            <!-- USERNAME -->
+            <div class="form-group">
+
+                <label for="username">
+                    Create Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Create your username"
+                    value="{{ username|default:'' }}"
+                    required
+                >
+
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+
+                <label for="password">
+                    Create Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Create your password"
+                    required
+                >
+
+            </div>
+
+            <!-- CONFIRM PASSWORD -->
+            <div class="form-group">
+
+                <label for="confirm_password">
+                    Re-enter Password
+                </label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    id="confirm_password"
+                    placeholder="Re-enter your password"
+                    required
+                >
+
+            </div>
+
+            <button type="submit" class="login-btn">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="back-login">
+            Already have an account?
+            <a href="{% url 'login' %}">
+                Login here
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function changeIdentifier() {
+
+    const role = document.getElementById("role").value;
+
+    const label = document.getElementById("identifier-label");
+
+    const input = document.getElementById("identifier");
+
+    if (role === "FACULTY") {
+
+        label.textContent = "Employee ID";
+
+        input.placeholder = "Enter your Employee ID";
+
+    } else {
+
+        label.textContent = "PRN";
+
+        input.placeholder = "Enter your PRN";
+
+    }
+}
+
+changeIdentifier();
+
+</script>
+
+</body>
+</html>

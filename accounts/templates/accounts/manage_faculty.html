@@ -1,0 +1,276 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Faculty - IT-SALMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7fb;
+            color: #29264c;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .title h2 {
+            font-size: 25px;
+            margin-bottom: 6px;
+        }
+
+        .title p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #5632d5;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            border: 1px solid #e7e6ee;
+            overflow-x: auto;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+        }
+
+        .add-btn {
+            text-decoration: none;
+            background: #5632d5;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1efff;
+            color: #4b3aa3;
+            text-align: left;
+            padding: 13px;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #faf9ff;
+        }
+
+        .status {
+            background: #e4f7e8;
+            color: #218739;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+
+        .view-btn {
+            background: #eeeaff;
+            color: #5632d5;
+        }
+
+        .edit-btn {
+            background: #fff3d6;
+            color: #a36a00;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+
+        <div class="title">
+
+            <h2>Manage Faculty</h2>
+
+            <p>
+                View and manage IT Department faculty
+            </p>
+
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- MAIN CARD -->
+    <div class="card">
+
+        <div class="card-header">
+
+            <h3>
+                Faculty ({{ faculty|length }})
+            </h3>
+
+            <!-- ADD FACULTY BUTTON -->
+            <a href="{% url 'add_faculty' %}" class="add-btn">
+                + Add Faculty
+            </a>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Employee ID</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for member in faculty %}
+
+                <tr>
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td>
+                        {{ member.full_name }}
+                    </td>
+
+                    <td>
+                        {{ member.employee_id }}
+                    </td>
+
+                    <td>
+                        {{ member.designation }}
+                    </td>
+
+                    <td>
+                        {{ member.email }}
+                    </td>
+
+                    <td>
+
+                        <span class="status">
+                            {{ member.status }}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <!-- VIEW FACULTY -->
+                        <a href="{% url 'view_faculty' member.faculty_id %}"
+                           class="action-btn view-btn">
+                            View
+                        </a>
+
+                        <!-- EDIT FACULTY -->
+                        <a href="{% url 'edit_faculty' member.faculty_id %}"
+                           class="action-btn edit-btn">
+                            Edit
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="7"
+                        class="empty-message">
+
+                        No faculty records found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

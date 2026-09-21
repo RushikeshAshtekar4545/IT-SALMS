@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - IT-SALMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7fc;
+            color: #222;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #29234a;
+            padding: 20px 12px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px 25px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #5b35d5;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 5px 0;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #c8c4dd;
+            font-size: 13px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #5632d5;
+            color: white;
+        }
+
+        .menu-icon {
+            width: 18px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .page-header h2 {
+            font-size: 19px;
+            color: #25234a;
+        }
+
+        .add-btn {
+            background-color: #5632d5;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background-color: #4526b0;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .form-card.show {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .form-row input {
+            padding: 9px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .submit-btn {
+            background-color: #1e8e3e;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .table-card {
+            background: white;
+            border: 1px solid #ecebf3;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            color: #888;
+            padding: 10px 8px;
+            border-bottom: 2px solid #f0f0f5;
+        }
+
+        td {
+            font-size: 13px;
+            padding: 10px 8px;
+            border-bottom: 1px solid #f0f0f5;
+            color: #333;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-Active {
+            background: #e4f8ea;
+            color: #1e8e3e;
+        }
+
+        .status-Inactive {
+            background: #fdecea;
+            color: #c0392b;
+        }
+
+        .toggle-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            cursor: pointer;
+            background: #eee9ff;
+            color: #5632d5;
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                width: 70px;
+            }
+            .logo-text,
+            .menu a span:not(.menu-icon) {
+                display: none;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            table {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-text">IT-SALMS</div>
+        </div>
+
+        <ul class="menu">
+            <li><a href="{% url 'admin_dashboard' %}"><span class="menu-icon">⌂</span><span>Admin Dashboard</span></a></li>
+            <li><a href="{% url 'manage_students' %}" class="active"><span class="menu-icon">🧑‍🎓</span><span>Manage Students</span></a></li>
+            <li><a href="{% url 'manage_faculty' %}"><span class="menu-icon">🧑‍🏫</span><span>Manage Faculty</span></a></li>
+            <li><a href="{% url 'logout' %}"><span class="menu-icon">↪</span><span>Logout</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h2>Manage Students</h2>
+            <button class="add-btn" onclick="document.getElementById('addForm').classList.toggle('show')">+ Add Student</button>
+        </div>
+
+        <div class="form-card" id="addForm">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add">
+                <div class="form-row">
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                    <input type="text" name="prn" placeholder="PRN" required>
+                    <input type="number" name="roll_no" placeholder="Roll No" required>
+                </div>
+                <div class="form-row">
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="mobile" placeholder="Mobile">
+                    <input type="text" name="year" placeholder="Year (e.g. TY)" required>
+                </div>
+                <button type="submit" class="submit-btn">Save Student</button>
+            </form>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>PRN</th>
+                        <th>Roll No</th>
+                        <th>Year</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ student.full_name }}</td>
+                        <td>{{ student.prn }}</td>
+                        <td>{{ student.roll_no }}</td>
+                        <td>{{ student.year }}</td>
+                        <td>{{ student.email }}</td>
+                        <td><span class="status-badge status-{{ student.status }}">{{ student.status }}</span></td>
+                        <td>
+                            <form method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="toggle_status">
+                                <input type="hidden" name="student_id" value="{{ student.student_id }}">
+                                <button type="submit" class="toggle-btn">Toggle</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
