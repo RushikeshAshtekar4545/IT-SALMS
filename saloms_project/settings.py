@@ -102,9 +102,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get(
-            'DB_NAME',
-            'student_activity_db'
-        ),
+    'DB_NAME',
+    'student_activity_db_prod'
+),
         'USER': os.environ.get(
             'DB_USER',
             'root'
@@ -121,9 +121,13 @@ DATABASES = {
             'DB_PORT',
             '3306'
         ),
+        'OPTIONS': {
+            'ssl': {
+                'ca': str(BASE_DIR / 'isrgrootx1.pem'),
+            },
+        },
     }
 }
-
 
 # ============================================================
 # PASSWORD VALIDATION
