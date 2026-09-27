@@ -1,10 +1,30 @@
+# Python
 __pycache__/
 *.py[cod]
-*.sqlite3
+*.pyo
+
+# Virtual environment
 venv/
 .venv/
-.env
-media/
+
+# Django
+db.sqlite3
 staticfiles/
+
+# User uploaded files
+media/
+
+# Environment variables
+.env
+
+# IDE
 .vscode/
-*.log
+.idea/
+
+# Backup files
+*_backup_*
+*.bak
+
+# Local reference files
+ocr_functions.txt
+project_structure.txt

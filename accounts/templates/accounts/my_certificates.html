@@ -204,7 +204,23 @@
     <main class="main-content">
 
         <div class="table-card">
-            <h2>My Certificates</h2>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin-bottom: 0;">My Certificates</h2>
+
+        <a href="{% url 'download_certificate_excel' %}"
+           style="
+                background: #5632d5;
+                color: white;
+                padding: 10px 16px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 600;
+           ">
+            📊 Download Excel
+        </a>
+    </div>
 
             {% if certificates %}
             <table>

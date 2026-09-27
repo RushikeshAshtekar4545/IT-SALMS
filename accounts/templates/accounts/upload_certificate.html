@@ -353,53 +353,120 @@
 
             {% endif %}
 
-            {% if show_confirm %}
+           {% if show_confirm %}
 
-            <div id="student-details">
-                <h3>Extracted Student Details</h3>
+    <div id="student-details">
 
-                <div class="form-group">
-                    <label>Participant Name</label>
-                    <input type="text" value="{{ extracted_name }}" readonly>
-                </div>
+        <h3>Extracted Certificate Details</h3>
 
-                <div class="form-group">
-                    <label>PRN</label>
-                    <input type="text" value="{{ extracted_prn }}" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label>Branch</label>
-                    <input type="text" value="{{ extracted_branch }}" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label>Year</label>
-                    <input type="text" value="{{ extracted_year }}" readonly>
-                </div>
-            </div>
-
-            <form method="POST" action="{% url 'confirm_certificate' %}">
-                {% csrf_token %}
-                <button type="submit" class="submit-btn">
-                    Confirm & Save
-                </button>
-            </form>
-
-            <form method="POST" action="{% url 'cancel_certificate' %}">
-                {% csrf_token %}
-                <button type="submit" class="cancel-btn">
-                    Cancel
-                </button>
-            </form>
-
-            {% endif %}
-
+        <div class="form-group">
+            <label>Year</label>
+            <input
+                type="text"
+                value="{{ extracted_year }}"
+                readonly
+            >
         </div>
 
-    </main>
+        <div class="form-group">
+            <label>Date</label>
+            <input
+                type="text"
+                value="{{ extracted_date }}"
+                readonly
+            >
+        </div>
 
-</div>
+        <div class="form-group">
+            <label>Time</label>
+            <input
+                type="text"
+                value="{{ extracted_time }}"
+                readonly
+            >
+        </div>
 
-</body>
-</html>
+        <div class="form-group">
+            <label>PRN</label>
+            <input
+                type="text"
+                value="{{ extracted_prn }}"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Participant Name</label>
+            <input
+                type="text"
+                value="{{ extracted_name }}"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Branch</label>
+            <input
+                type="text"
+                value="{{ extracted_branch }}"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Event Type</label>
+            <input
+                type="text"
+                value="{{ extracted_event_type }}"
+                readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label>College Name</label>
+            <input
+                type="text"
+                value="{{ extracted_college_name }}"
+                readonly
+            >
+        </div>
+
+    </div>
+
+    <form
+        method="POST"
+        action="{% url 'confirm_certificate' %}"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="submit-btn"
+        >
+            Confirm & Save
+        </button>
+    </form>
+
+   <form
+    method="POST"
+    action="{% url 'cancel_certificate' %}"
+>
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="cancel-btn"
+    >
+        Cancel
+    </button>
+</form>
+
+<a
+     href="{% url 'download_extracted_certificate_excel' %}"
+    class="submit-btn"
+    style="display: block; text-align: center; text-decoration: none; margin-top: 10px;"
+>
+    Download Excel
+</a>
+
+{% endif %}

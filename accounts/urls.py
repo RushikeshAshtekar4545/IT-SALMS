@@ -20,10 +20,22 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('manage-students/', views.manage_students, name='manage_students'),
     path('manage-faculty/', views.manage_faculty, name='manage_faculty'),
+    path('delete-student/<int:student_id>/', views.delete_student, name='delete_student'),
+    path('delete-faculty/<int:faculty_id>/', views.delete_faculty, name='delete_faculty'),
     path('add-faculty/', views.add_faculty, name='add_faculty'),
     path('view-faculty/<int:faculty_id>/', views.view_faculty, name='view_faculty'),
     path('edit-faculty/<int:faculty_id>/', views.edit_faculty, name='edit_faculty'),
     path('extract-certificate/', views.extract_certificate, name='extract_certificate'),
     path('confirm-certificate/', views.confirm_certificate, name='confirm_certificate'),
     path('cancel-certificate/', views.cancel_certificate, name='cancel_certificate'),
+    path(
+    'download-certificate-excel/',
+    views.download_certificate_excel,
+    name='download_certificate_excel'
+    ),
+    path(
+    'download-extracted-certificate-excel/',
+    views.download_extracted_certificate_excel,
+    name='download_extracted_certificate_excel'
+    ),
 ]
