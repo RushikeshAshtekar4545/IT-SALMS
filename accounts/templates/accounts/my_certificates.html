@@ -239,7 +239,11 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{{ cert.activity.activity_name }}</td>
                         <td>{{ cert.upload_date }}</td>
-                        <td><a href="/media/{{ cert.certificate_file }}" target="_blank" class="file-link">View File</a></td>
+                        <td>
+    <a href="/media/{{ cert.certificate_file }}" target="_blank" class="file-link">
+        View File
+    </a>
+</td>
                         <td><span class="status-badge status-{{ cert.verification_status }}">{{ cert.verification_status }}</span></td>
                     </tr>
                     {% endfor %}

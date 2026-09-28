@@ -34,8 +34,8 @@ urlpatterns = [
     name='download_certificate_excel'
     ),
     path(
-    'download-extracted-certificate-excel/',
-    views.download_extracted_certificate_excel,
-    name='download_extracted_certificate_excel'
+    'download-certificate/<int:certificate_id>/excel/',
+    views.download_certificate_excel_for_faculty,
+    name='download_certificate_excel_for_faculty'
     ),
 ]

@@ -18,10 +18,15 @@ import os
 import re
 
 from PyPDF2 import PdfReader
-from PIL import Image
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+# Use the local Windows Tesseract installation when it exists.
+# On Render/Linux, pytesseract will use the system Tesseract command.
+WINDOWS_TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+if os.path.exists(WINDOWS_TESSERACT_PATH):
+    pytesseract.pytesseract.tesseract_cmd = WINDOWS_TESSERACT_PATH
 from .models import User, Student, Faculty, Activity, Certificate, LeaveApplication
 
 def login_view(request):
@@ -745,156 +750,415 @@ def normalized_certificate_text(text):
     ).strip()
 
 
+def _prepare_ocr_images(image):
+    """
+    Create multiple OCR-friendly versions of a certificate image.
+
+    This is especially useful for:
+    - WhatsApp compressed images
+    - screenshots
+    - low-resolution certificates
+    - dark/light backgrounds
+    - scanned certificates
+    """
+
+    images = []
+
+    try:
+        image = image.convert("RGB")
+
+        # ----------------------------------------------------
+        # ORIGINAL
+        # ----------------------------------------------------
+        images.append(image)
+
+        # ----------------------------------------------------
+        # UPSCALE
+        # ----------------------------------------------------
+        width, height = image.size
+
+        if width < 1800:
+            scale = 2
+        else:
+            scale = 1
+
+        if scale > 1:
+            upscaled = image.resize(
+                (width * scale, height * scale),
+                Image.Resampling.LANCZOS
+            )
+        else:
+            upscaled = image
+
+        images.append(upscaled)
+
+        # ----------------------------------------------------
+        # GRAYSCALE + CONTRAST
+        # ----------------------------------------------------
+        gray = ImageOps.grayscale(upscaled)
+
+        gray = ImageOps.autocontrast(gray)
+
+        contrast = ImageEnhance.Contrast(gray).enhance(2.0)
+
+        sharp = contrast.filter(
+            ImageFilter.SHARPEN
+        )
+
+        images.append(sharp)
+
+        # ----------------------------------------------------
+        # THRESHOLD VERSION
+        # ----------------------------------------------------
+        threshold = sharp.point(
+            lambda pixel: 255 if pixel > 160 else 0
+        )
+
+        images.append(threshold)
+
+        # ----------------------------------------------------
+        # SOFT THRESHOLD
+        # ----------------------------------------------------
+        soft_threshold = sharp.point(
+            lambda pixel: 255 if pixel > 190 else 0
+        )
+
+        images.append(soft_threshold)
+
+    except Exception as error:
+        print("OCR image preparation error:", error)
+
+        images = [image]
+
+    return images
+
+
+def _ocr_image_variants(image):
+    """
+    Run Tesseract using several certificate-friendly configurations.
+    """
+
+    results = []
+
+    prepared_images = _prepare_ocr_images(image)
+
+    psm_modes = [
+        3,   # Automatic page segmentation
+        6,   # Uniform block of text
+        11,  # Sparse text
+        12,  # Sparse text with OSD
+    ]
+
+    for prepared_image in prepared_images:
+
+        for psm in psm_modes:
+
+            try:
+
+                text = pytesseract.image_to_string(
+                    prepared_image,
+                    config=f"--oem 3 --psm {psm}"
+                )
+
+                text = clean_certificate_text(text)
+
+                if text:
+                    results.append(text)
+
+            except Exception as error:
+
+                print(
+                    f"OCR failed for PSM {psm}:",
+                    error
+                )
+
+    return results
+
+
+def _score_ocr_text(text):
+    """
+    Give an OCR result a score based on useful certificate information.
+
+    A result containing several certificate fields is preferred over
+    an OCR result containing mostly random WhatsApp-image noise.
+    """
+
+    if not text:
+        return 0
+
+    score = 0
+
+    normalized = re.sub(
+        r"\s+",
+        " ",
+        text
+    ).lower()
+
+    useful_words = [
+        "certificate",
+        "certify",
+        "participant",
+        "student",
+        "candidate",
+        "name",
+        "prn",
+        "registration",
+        "enrollment",
+        "branch",
+        "department",
+        "date",
+        "time",
+        "year",
+        "event",
+        "activity",
+        "college",
+        "institute",
+        "university",
+        "workshop",
+        "hackathon",
+        "seminar",
+        "webinar",
+        "competition",
+        "training",
+        "internship",
+        "organized",
+        "participated",
+    ]
+
+    for word in useful_words:
+
+        if word in normalized:
+            score += 3
+
+    # Date-like information
+    if re.search(
+        r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b",
+        normalized
+    ):
+        score += 8
+
+    if re.search(
+        r"\b20\d{2}\b",
+        normalized
+    ):
+        score += 5
+
+    # PRN / registration-like number
+    if re.search(
+        r"\b\d{6,10}\b",
+        normalized
+    ):
+        score += 5
+
+    # A reasonable amount of text is useful.
+    score += min(
+        len(normalized) // 100,
+        10
+    )
+
+    return score
+
+
+def _select_best_ocr_text(results):
+    """
+    Select the OCR result containing the most useful certificate
+    information.
+    """
+
+    if not results:
+        return ""
+
+    unique_results = []
+
+    seen = set()
+
+    for result in results:
+
+        cleaned = clean_certificate_text(result)
+
+        if not cleaned:
+            continue
+
+        key = re.sub(
+            r"\s+",
+            " ",
+            cleaned
+        ).lower()
+
+        if key not in seen:
+
+            seen.add(key)
+            unique_results.append(cleaned)
+
+    if not unique_results:
+        return ""
+
+    unique_results.sort(
+        key=_score_ocr_text,
+        reverse=True
+    )
+
+    return unique_results[0]
+
+
 def extract_certificate_text(file_path):
     """
-    Extract certificate text from PDF or image.
+    Extract text from PDF or image.
 
-    Multiple OCR page segmentation modes are used because
-    certificate layouts vary significantly.
+    Supports:
+    - normal PDFs
+    - scanned PDFs
+    - JPG/JPEG
+    - PNG
+    - WhatsApp-compressed images
+    - screenshots
     """
 
-    extension = os.path.splitext(file_path)[1].lower()
+    extension = os.path.splitext(
+        file_path
+    )[1].lower()
 
     # ========================================================
     # PDF
     # ========================================================
+
     if extension == ".pdf":
 
-        normal_parts = []
+        native_text_parts = []
 
         try:
+
             reader = PdfReader(file_path)
 
             for page in reader.pages:
+
                 page_text = page.extract_text() or ""
 
                 if page_text.strip():
-                    normal_parts.append(page_text)
+
+                    native_text_parts.append(
+                        page_text
+                    )
 
         except Exception as error:
-            print("PDF text extraction error:", error)
 
-        normal_text = clean_certificate_text(
-            "\n".join(normal_parts)
+            print(
+                "PDF native extraction error:",
+                error
+            )
+
+        native_text = clean_certificate_text(
+            "\n".join(native_text_parts)
         )
 
-        # Keep normal PDF text when it is already good.
-        if len(re.sub(r"\s+", "", normal_text)) >= 80:
-            return normal_text
+        # If the PDF already contains good text, still use OCR
+        # when the text appears too short or incomplete.
+        native_score = _score_ocr_text(
+            native_text
+        )
+
+        # ====================================================
+        # OCR scanned PDF
+        # ====================================================
+
+        ocr_results = []
 
         try:
 
-            pdf_document = fitz.open(file_path)
-
-            all_pages = []
+            pdf_document = fitz.open(
+                file_path
+            )
 
             for page in pdf_document:
 
-                matrix = fitz.Matrix(2, 2)
+                # Render at high resolution.
+                matrix = fitz.Matrix(
+                    2.5,
+                    2.5
+                )
 
                 pix = page.get_pixmap(
                     matrix=matrix,
                     alpha=False
                 )
 
-                image_bytes = pix.tobytes("png")
+                image_bytes = pix.tobytes(
+                    "png"
+                )
 
                 image = Image.open(
                     io.BytesIO(image_bytes)
                 )
 
-                page_results = []
+                page_results = _ocr_image_variants(
+                    image
+                )
 
-                # PSM 3 first because it works well for
-                # normal certificate layouts.
-                for psm in [3, 4, 6, 11, 12]:
-
-                    try:
-
-                        page_text = pytesseract.image_to_string(
-                            image,
-                            config=f"--psm {psm}"
-                        )
-
-                        cleaned = clean_certificate_text(
-                            page_text
-                        )
-
-                        if cleaned:
-                            page_results.append(
-                                cleaned
-                            )
-
-                    except Exception as error:
-
-                        print(
-                            f"PDF OCR PSM {psm} error:",
-                            error
-                        )
-
-                if page_results:
-                    all_pages.append(
-                        "\n".join(page_results)
-                    )
+                ocr_results.extend(
+                    page_results
+                )
 
             pdf_document.close()
 
-            ocr_text = clean_certificate_text(
-                "\n".join(all_pages)
-            )
-
-            if len(ocr_text) > len(normal_text):
-                return ocr_text
-
         except Exception as error:
 
-            print("PDF OCR error:", error)
+            print(
+                "PDF OCR error:",
+                error
+            )
 
-        return normal_text
+        best_ocr_text = _select_best_ocr_text(
+            ocr_results
+        )
+
+        ocr_score = _score_ocr_text(
+            best_ocr_text
+        )
+
+        # Prefer whichever contains more useful certificate
+        # information.
+        if ocr_score > native_score:
+            return best_ocr_text
+
+        if native_text:
+            return native_text
+
+        return best_ocr_text
 
     # ========================================================
     # IMAGE
     # ========================================================
-    try:
 
-        image = Image.open(file_path)
+    if extension in [
+        ".jpg",
+        ".jpeg",
+        ".png"
+    ]:
 
-        all_results = []
+        try:
 
-        # IMPORTANT:
-        # PSM 3 is first because this certificate produced:
-        #
-        # Bamane Anushka Ramesh
-        #
-        # with PSM 3.
-        for psm in [3, 4, 6, 11, 12]:
+            image = Image.open(
+                file_path
+            )
 
-            try:
+            results = _ocr_image_variants(
+                image
+            )
 
-                text = pytesseract.image_to_string(
-                    image,
-                    config=f"--psm {psm}"
-                )
+            return _select_best_ocr_text(
+                results
+            )
 
-                cleaned = clean_certificate_text(text)
+        except Exception as error:
 
-                if cleaned:
-                    all_results.append(cleaned)
+            print(
+                "Image OCR error:",
+                error
+            )
 
-            except Exception as error:
+            return ""
 
-                print(
-                    f"Image OCR PSM {psm} error:",
-                    error
-                )
-
-        return "\n".join(all_results)
-
-    except Exception as error:
-
-        print("Image OCR error:", error)
-
-        return ""
+    return ""
 
 def _clean_ocr_value(value):
     """Clean and normalize OCR extracted text."""
@@ -2084,7 +2348,9 @@ def extract_certificate(request):
             "error": "Invalid request method."
         })
 
-    student = Student.objects.filter(email=request.user.email).first()
+    student = Student.objects.filter(
+        email=request.user.email
+    ).first()
 
     if student is None:
         return JsonResponse({
@@ -2100,98 +2366,217 @@ def extract_certificate(request):
             "error": "Please select a certificate."
         })
 
-    file_extension = os.path.splitext(uploaded_file.name)[1].lower()
-    extracted_text = ""
+    file_extension = os.path.splitext(
+        uploaded_file.name
+    )[1].lower()
+
+    allowed_extensions = [
+        ".pdf",
+        ".jpg",
+        ".jpeg",
+        ".png"
+    ]
+
+    if file_extension not in allowed_extensions:
+        return JsonResponse({
+            "success": False,
+            "error": "Only PDF, JPG, JPEG and PNG files are allowed."
+        })
+
+    temp_dir = os.path.join(
+        settings.MEDIA_ROOT,
+        "temp_certificate_extraction"
+    )
+
+    os.makedirs(
+        temp_dir,
+        exist_ok=True
+    )
+
+    temp_filename = (
+        f"temp_{request.user.id}_"
+        f"{int(time.time() * 1000)}"
+        f"{file_extension}"
+    )
+
+    temp_path = os.path.join(
+        temp_dir,
+        temp_filename
+    )
 
     try:
-        if file_extension == ".pdf":
-            reader = PdfReader(uploaded_file)
-            for page in reader.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    extracted_text += page_text + "\n"
 
-        elif file_extension in [".jpg", ".jpeg", ".png"]:
-            image = Image.open(uploaded_file)
-            extracted_text = pytesseract.image_to_string(image)
+        # ---------------------------------------------------------
+        # SAVE UPLOADED FILE TEMPORARILY
+        # ---------------------------------------------------------
 
-        else:
+        with open(temp_path, "wb+") as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+
+        # ---------------------------------------------------------
+        # EXTRACT TEXT USING IMPROVED OCR
+        # ---------------------------------------------------------
+
+        extracted_text = extract_certificate_text(
+            temp_path
+        )
+
+        extracted_text = clean_certificate_text(
+            extracted_text
+        )
+
+        if not extracted_text:
             return JsonResponse({
                 "success": False,
-                "error": "Only PDF, JPG, JPEG and PNG files are allowed."
+                "error": (
+                    "No readable text was found in "
+                    "the certificate."
+                )
             })
 
-    except Exception as e:
+        # ---------------------------------------------------------
+        # EXTRACT ALL 8 CERTIFICATE FIELDS
+        # ---------------------------------------------------------
+
+        try:
+
+            extracted_fields = extract_all_certificate_fields(
+                extracted_text
+            )
+
+        except Exception as error:
+
+            print(
+                "Certificate field extraction error:",
+                error
+            )
+
+            extracted_fields = {}
+
+        # ---------------------------------------------------------
+        # GET INDIVIDUAL VALUES
+        # ---------------------------------------------------------
+
+        extracted_year = str(
+            extracted_fields.get("year", "")
+        ).strip()
+
+        extracted_date = str(
+            extracted_fields.get("date", "")
+        ).strip()
+
+        extracted_time = str(
+            extracted_fields.get("time", "")
+        ).strip()
+
+        extracted_prn = str(
+            extracted_fields.get("prn", "")
+        ).strip()
+
+        extracted_name = str(
+            extracted_fields.get(
+                "participant_name",
+                ""
+            )
+        ).strip()
+
+        extracted_branch = str(
+            extracted_fields.get("branch", "")
+        ).strip()
+
+        extracted_event_type = str(
+            extracted_fields.get(
+                "event_type",
+                ""
+            )
+        ).strip()
+
+        extracted_college_name = str(
+            extracted_fields.get(
+                "college_name",
+                ""
+            )
+        ).strip()
+
+        # ---------------------------------------------------------
+        # PRN VALIDATION
+        # ---------------------------------------------------------
+
+        if extracted_prn:
+
+            student_prn = str(
+                student.prn
+            ).strip()
+
+            if extracted_prn != student_prn:
+
+                return JsonResponse({
+                    "success": False,
+                    "error": (
+                        "The PRN found on the certificate "
+                        "does not match your account."
+                    )
+                })
+
+        # ---------------------------------------------------------
+        # RETURN ALL 8 FIELDS
+        # ---------------------------------------------------------
+
         return JsonResponse({
-            "success": False,
-            "error": f"Unable to read certificate: {str(e)}"
+
+            "success": True,
+
+            "year": extracted_year,
+
+            "date": extracted_date,
+
+            "time": extracted_time,
+
+            "prn": extracted_prn,
+
+            "participant_name": extracted_name,
+
+            "branch": extracted_branch,
+
+            "event_type": extracted_event_type,
+
+            "college_name": extracted_college_name,
+
         })
 
-    text = re.sub(r"\s+", " ", extracted_text).strip()
+    except Exception as error:
 
-    if not text:
+        print(
+            "Certificate extraction error:",
+            error
+        )
+
         return JsonResponse({
             "success": False,
-            "error": "No readable text was found in the certificate."
+            "error": (
+                f"Unable to process certificate: "
+                f"{str(error)}"
+            )
         })
 
-    prn_match = re.search(
-        r"\bPRN\s*[:\-]?\s*([A-Za-z0-9\-]{5,20})\b",
-        text,
-        re.IGNORECASE
-    )
-    extracted_prn = prn_match.group(1).strip() if prn_match else ""
+    finally:
 
-    name_match = re.search(
-        r"(?:Participant\s*Name|Student\s*Name|Candidate\s*Name|Name)"
-        r"\s*[:\-]?\s*([A-Za-z][A-Za-z .]{1,80})"
-        r"(?=\s+(?:PRN|Roll|Branch|Year|Class|Academic|Department)\b|$)",
-        text,
-        re.IGNORECASE
-    )
-    extracted_name = name_match.group(1).strip(" :-") if name_match else ""
+        # ---------------------------------------------------------
+        # DELETE TEMPORARY FILE
+        # ---------------------------------------------------------
 
-    branch_match = re.search(
-        r"(?:Branch|Department)"
-        r"\s*[:\-]?\s*([A-Za-z][A-Za-z &./-]{1,50})"
-        r"(?=\s+(?:Year|Class|Academic|PRN|Roll)\b|$)",
-        text,
-        re.IGNORECASE
-    )
-    extracted_branch = branch_match.group(1).strip(" :-") if branch_match else ""
+        try:
 
-    year_match = re.search(
-        r"(?:Year|Class)"
-        r"\s*[:\-]?\s*([A-Za-z0-9][A-Za-z0-9 ._-]{0,30})"
-        r"(?=\s+(?:Branch|Department|Academic|PRN|Roll)\b|$)",
-        text,
-        re.IGNORECASE
-    )
-    extracted_year = year_match.group(1).strip(" :-") if year_match else ""
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
 
-    academic_year_match = re.search(
-        r"(?:Academic\s*Year|Academic\s*Session)"
-        r"\s*[:\-]?\s*([0-9]{4}\s*[-/]\s*[0-9]{2,4})",
-        text,
-        re.IGNORECASE
-    )
-    extracted_academic_year = academic_year_match.group(1).strip() if academic_year_match else ""
+        except Exception as error:
 
-    if extracted_prn:
-        if str(extracted_prn).strip() != str(student.prn).strip():
-            return JsonResponse({
-                "success": False,
-                "error": "The PRN found on the certificate does not match your account."
-            })
-
-    return JsonResponse({
-        "success": True,
-        "participant_name": extracted_name,
-        "prn": extracted_prn,
-        "academic_year": extracted_academic_year,
-        "year": extracted_year,
-        "branch": extracted_branch,
-    })
+            print(
+                "Temporary certificate cleanup error:",
+                error
+            )
 
 def download_certificate_excel(request):
     """Download the logged-in student's certificates as an Excel file."""
@@ -2319,6 +2704,137 @@ def download_extracted_certificate_excel(request):
 
     response["Content-Disposition"] = (
         'attachment; filename="Certificate_Extracted_Data.xlsx"'
+    )
+
+    workbook.save(response)
+
+    return response
+
+@login_required
+def download_certificate_excel_for_faculty(request, certificate_id):
+    """Download the 8 extracted fields for one specific certificate."""
+
+    # ---------------------------------------------------------
+    # Get the selected certificate
+    # ---------------------------------------------------------
+
+    certificate = Certificate.objects.filter(
+        certificate_id=certificate_id
+    ).select_related(
+        "student",
+        "activity"
+    ).first()
+
+    if certificate is None:
+        return HttpResponse(
+            "Certificate not found.",
+            status=404
+        )
+
+    # ---------------------------------------------------------
+    # Get the actual certificate file
+    # ---------------------------------------------------------
+
+    certificate_path = os.path.join(
+        settings.MEDIA_ROOT,
+        str(certificate.certificate_file)
+    )
+
+    if not os.path.exists(certificate_path):
+        return HttpResponse(
+            "Certificate file not found.",
+            status=404
+        )
+
+    # ---------------------------------------------------------
+    # Extract text from this particular certificate
+    # ---------------------------------------------------------
+
+    certificate_text = extract_certificate_text(
+        certificate_path
+    )
+
+    # ---------------------------------------------------------
+    # Extract all 8 fields
+    # ---------------------------------------------------------
+
+    extracted_data = extract_all_certificate_fields(
+        certificate_text
+    )
+
+    # ---------------------------------------------------------
+    # Create Excel workbook
+    # ---------------------------------------------------------
+
+    workbook = Workbook()
+
+    worksheet = workbook.active
+
+    worksheet.title = "Certificate Details"
+
+    # ---------------------------------------------------------
+    # Required 8 fields
+    # ---------------------------------------------------------
+
+    headers = [
+        "Year",
+        "Date",
+        "Time",
+        "PRN",
+        "Participant Name",
+        "Branch",
+        "Event Type",
+        "College Name",
+    ]
+
+    worksheet.append(headers)
+
+    # ---------------------------------------------------------
+    # Add extracted values
+    # ---------------------------------------------------------
+
+    worksheet.append([
+        extracted_data.get("year", ""),
+        extracted_data.get("date", ""),
+        extracted_data.get("time", ""),
+        extracted_data.get("prn", ""),
+        extracted_data.get("participant_name", ""),
+        extracted_data.get("branch", ""),
+        extracted_data.get("event_type", ""),
+        extracted_data.get("college_name", ""),
+    ])
+
+    # ---------------------------------------------------------
+    # Column widths
+    # ---------------------------------------------------------
+
+    column_widths = {
+        "A": 15,
+        "B": 30,
+        "C": 18,
+        "D": 18,
+        "E": 30,
+        "F": 25,
+        "G": 25,
+        "H": 40,
+    }
+
+    for column, width in column_widths.items():
+        worksheet.column_dimensions[column].width = width
+
+    # ---------------------------------------------------------
+    # Return Excel file
+    # ---------------------------------------------------------
+
+    response = HttpResponse(
+        content_type=(
+            "application/vnd.openxmlformats-officedocument."
+            "spreadsheetml.sheet"
+        )
+    )
+
+    response["Content-Disposition"] = (
+        f'attachment; filename="Certificate_{certificate_id}_Extracted_Data.xlsx"'
     )
 
     workbook.save(response)

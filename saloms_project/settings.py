@@ -98,36 +98,50 @@ TEMPLATES = [
 # DATABASE
 # ============================================================
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get(
-    'DB_NAME',
-    'student_activity_db_prod'
-),
-        'USER': os.environ.get(
-            'DB_USER',
-            'root'
-        ),
-        'PASSWORD': os.environ.get(
-            'DB_PASSWORD',
-            ''
-        ),
-        'HOST': os.environ.get(
-            'DB_HOST',
-            'localhost'
-        ),
-        'PORT': os.environ.get(
-            'DB_PORT',
-            '3306'
-        ),
-        'OPTIONS': {
-            'ssl': {
-                'ca': str(BASE_DIR / 'isrgrootx1.pem'),
-            },
-        },
+# ============================================================
+# DATABASE CONFIGURATION
+# ============================================================
+
+import dj_database_url
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    # Render / Production → PostgreSQL
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
-}
+else:
+    # Local Development → MySQL
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get(
+                "DB_NAME",
+                "student_activity_db",
+            ),
+            "USER": os.environ.get(
+                "DB_USER",
+                "root",
+            ),
+            "PASSWORD": os.environ.get(
+                "DB_PASSWORD",
+                "rushi4545",
+            ),
+            "HOST": os.environ.get(
+                "DB_HOST",
+                "localhost",
+            ),
+            "PORT": os.environ.get(
+                "DB_PORT",
+                "3306",
+            ),
+        }
+    }
 
 # ============================================================
 # PASSWORD VALIDATION

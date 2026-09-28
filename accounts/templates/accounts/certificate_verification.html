@@ -226,7 +226,17 @@
                         <td>{{ cert.student.full_name }}</td>
                         <td>{{ cert.activity.activity_name }}</td>
                         <td>{{ cert.upload_date }}</td>
-                        <td><a href="/media/{{ cert.certificate_file }}" target="_blank" class="file-link">View File</a></td>
+                       <td>
+    <a href="/media/{{ cert.certificate_file }}" target="_blank" class="file-link">
+        View File
+    </a>
+
+    <a href="{% url 'download_certificate_excel_for_faculty' cert.certificate_id %}"
+       class="file-link"
+       style="margin-left: 12px;">
+        Download Excel
+    </a>
+</td>
                         <td>
                             <form method="POST" style="display:inline;">
                                 {% csrf_token %}
