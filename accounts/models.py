@@ -54,7 +54,7 @@ class Student(models.Model):
     year = models.CharField(max_length=10)
     branch = models.CharField(max_length=20, default='IT')
     division = models.CharField(max_length=1, blank=True, null=True)
-    password = models.CharField(max_length=255)
+    password = models.CharField(max_length=255, blank=True, null=True)
     profile_photo = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=10, default='Active')
     created_at = models.DateTimeField()

@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'activities',
-                'managed': False,
+                
             },
         ),
         migrations.CreateModel(
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'certificates',
-                'managed': False,
+                
             },
         ),
         migrations.CreateModel(
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'faculty',
-                'managed': False,
+                
             },
         ),
         migrations.CreateModel(
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'leave_applications',
-                'managed': False,
+                
             },
         ),
         migrations.CreateModel(
@@ -101,7 +101,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'students',
-                'managed': False,
+                
             },
         ),
         migrations.AlterField(

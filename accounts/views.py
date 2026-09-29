@@ -2898,3 +2898,4 @@ def delete_faculty(request, faculty_id):
         )
 
     return redirect('manage_faculty')
+

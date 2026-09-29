@@ -39,3 +39,4 @@ urlpatterns = [
     name='download_certificate_excel_for_faculty'
     ),
 ]
+
