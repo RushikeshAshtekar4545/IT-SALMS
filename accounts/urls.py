@@ -28,15 +28,24 @@ urlpatterns = [
     path('extract-certificate/', views.extract_certificate, name='extract_certificate'),
     path('confirm-certificate/', views.confirm_certificate, name='confirm_certificate'),
     path('cancel-certificate/', views.cancel_certificate, name='cancel_certificate'),
-    path(
-    'download-certificate-excel/',
-    views.download_certificate_excel,
-    name='download_certificate_excel'
+           path(
+        'download-certificate-excel/',
+        views.download_certificate_excel,
+        name='download_certificate_excel'
     ),
+
     path(
-    'download-certificate/<int:certificate_id>/excel/',
-    views.download_certificate_excel_for_faculty,
-    name='download_certificate_excel_for_faculty'
+        'download-extracted-certificate-excel/',
+        views.download_extracted_certificate_excel,
+        name='download_extracted_certificate_excel'
+    ),
+
+    path(
+        'download-certificate/<int:certificate_id>/excel/',
+        views.download_certificate_excel_for_faculty,
+        name='download_certificate_excel_for_faculty'
     ),
 ]
+
+
 

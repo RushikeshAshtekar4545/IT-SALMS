@@ -1,0 +1,1482 @@
+[
+{
+  "model": "accounts.student",
+  "pk": 1,
+  "fields": {
+    "roll_no": 1,
+    "prn": "2110005",
+    "full_name": "Dhanashree Jadhav",
+    "email": "2110005@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 2,
+  "fields": {
+    "roll_no": 2,
+    "prn": "2110010",
+    "full_name": "Vishwajeet More",
+    "email": "2110010@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 3,
+  "fields": {
+    "roll_no": 3,
+    "prn": "2310017",
+    "full_name": "Vaibhavi Salunkhe",
+    "email": "2310017@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 4,
+  "fields": {
+    "roll_no": 4,
+    "prn": "2310018",
+    "full_name": "Trupti Patil",
+    "email": "2310018@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 5,
+  "fields": {
+    "roll_no": 5,
+    "prn": "2310069",
+    "full_name": "Sahil Kumar",
+    "email": "2310069@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 6,
+  "fields": {
+    "roll_no": 6,
+    "prn": "2410001",
+    "full_name": "Namrata Kekare",
+    "email": "2410001@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 7,
+  "fields": {
+    "roll_no": 7,
+    "prn": "2410002",
+    "full_name": "Taksh Zunzarrao Mohite",
+    "email": "2410002@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 8,
+  "fields": {
+    "roll_no": 8,
+    "prn": "2410003",
+    "full_name": "Pallavi Yashodhan Patil",
+    "email": "2410003@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 9,
+  "fields": {
+    "roll_no": 9,
+    "prn": "2410004",
+    "full_name": "Kartikesh Avinash Chavan",
+    "email": "2410004@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 10,
+  "fields": {
+    "roll_no": 10,
+    "prn": "2410005",
+    "full_name": "Vedanti Patil",
+    "email": "2410005@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 11,
+  "fields": {
+    "roll_no": 11,
+    "prn": "2410006",
+    "full_name": "Tanmay Rajesh Chavan",
+    "email": "2410006@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 12,
+  "fields": {
+    "roll_no": 12,
+    "prn": "2410008",
+    "full_name": "Shriya Nitin Mali",
+    "email": "2410008@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 13,
+  "fields": {
+    "roll_no": 13,
+    "prn": "2410010",
+    "full_name": "Ishita Ranjit Kurane",
+    "email": "2410010@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 14,
+  "fields": {
+    "roll_no": 14,
+    "prn": "2410011",
+    "full_name": "Anushka Dupte",
+    "email": "2410011@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 15,
+  "fields": {
+    "roll_no": 15,
+    "prn": "2410012",
+    "full_name": "Satyam Vishwanath Ghorpade",
+    "email": "2410012@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 16,
+  "fields": {
+    "roll_no": 16,
+    "prn": "2410013",
+    "full_name": "Tanuja Narayan Junjwadkar",
+    "email": "2410013@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 17,
+  "fields": {
+    "roll_no": 17,
+    "prn": "2410014",
+    "full_name": "Vaibhavi Patil",
+    "email": "2410014@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 18,
+  "fields": {
+    "roll_no": 18,
+    "prn": "2410015",
+    "full_name": "Kaustubh Jadhav",
+    "email": "2410015@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 19,
+  "fields": {
+    "roll_no": 19,
+    "prn": "2410016",
+    "full_name": "Tasmiya Arif Pathan",
+    "email": "2410016@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 20,
+  "fields": {
+    "roll_no": 20,
+    "prn": "2410017",
+    "full_name": "Pradnya Siddhant Shinde",
+    "email": "2410017@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 21,
+  "fields": {
+    "roll_no": 21,
+    "prn": "2410018",
+    "full_name": "Abdulwahid Haiderali Shaikh",
+    "email": "2410018@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 22,
+  "fields": {
+    "roll_no": 22,
+    "prn": "2410019",
+    "full_name": "Priyanka Daji Shinde",
+    "email": "2410019@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 23,
+  "fields": {
+    "roll_no": 23,
+    "prn": "2410020",
+    "full_name": "Anushka Bamane",
+    "email": "2410020@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 24,
+  "fields": {
+    "roll_no": 24,
+    "prn": "2410021",
+    "full_name": "Samruddhi Abhijit Bhasme",
+    "email": "2410021@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 25,
+  "fields": {
+    "roll_no": 25,
+    "prn": "2410022",
+    "full_name": "Pruthvi Jayant Patil",
+    "email": "2410022@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 26,
+  "fields": {
+    "roll_no": 26,
+    "prn": "2410023",
+    "full_name": "Siddhraj Mathpati",
+    "email": "2410023@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 27,
+  "fields": {
+    "roll_no": 27,
+    "prn": "2410025",
+    "full_name": "Aryan Chandrashekhar Deshmukh",
+    "email": "2410025@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 28,
+  "fields": {
+    "roll_no": 28,
+    "prn": "2410029",
+    "full_name": "Prabhuraj Pradeep Pawar",
+    "email": "2410029@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 29,
+  "fields": {
+    "roll_no": 29,
+    "prn": "2410030",
+    "full_name": "Shivam Rajaram Babar",
+    "email": "2410030@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 30,
+  "fields": {
+    "roll_no": 30,
+    "prn": "2410031",
+    "full_name": "Pranjali Pratap Patil",
+    "email": "2410031@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 31,
+  "fields": {
+    "roll_no": 31,
+    "prn": "2410032",
+    "full_name": "Atharv Jagdale",
+    "email": "2410032@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 32,
+  "fields": {
+    "roll_no": 32,
+    "prn": "2410034",
+    "full_name": "Aditi Zambre",
+    "email": "2410034@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 33,
+  "fields": {
+    "roll_no": 33,
+    "prn": "2410035",
+    "full_name": "Madhura Pawar",
+    "email": "2410035@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 34,
+  "fields": {
+    "roll_no": 34,
+    "prn": "2410036",
+    "full_name": "Sandesh Gaikwad",
+    "email": "2410036@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 35,
+  "fields": {
+    "roll_no": 35,
+    "prn": "2410038",
+    "full_name": "Dhanashri More",
+    "email": "2410038@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 36,
+  "fields": {
+    "roll_no": 36,
+    "prn": "2410039",
+    "full_name": "Aryan Chavan",
+    "email": "2410039@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 37,
+  "fields": {
+    "roll_no": 37,
+    "prn": "2410040",
+    "full_name": "Ganesh Khandekar",
+    "email": "2410040@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 38,
+  "fields": {
+    "roll_no": 38,
+    "prn": "2410041",
+    "full_name": "Aryan Bhilwade",
+    "email": "2410041@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 39,
+  "fields": {
+    "roll_no": 39,
+    "prn": "2410042",
+    "full_name": "Namrata Madhukar Bhosale",
+    "email": "2410042@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 40,
+  "fields": {
+    "roll_no": 40,
+    "prn": "2410043",
+    "full_name": "Parineeta Patil",
+    "email": "2410043@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 41,
+  "fields": {
+    "roll_no": 41,
+    "prn": "2410044",
+    "full_name": "Vishwasamradnyi Ramraje Mane",
+    "email": "2410044@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 42,
+  "fields": {
+    "roll_no": 42,
+    "prn": "2410046",
+    "full_name": "Hatshita Shah",
+    "email": "2410046@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 43,
+  "fields": {
+    "roll_no": 43,
+    "prn": "2410047",
+    "full_name": "Tanishqa Abhijeet Mali",
+    "email": "2410047@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 44,
+  "fields": {
+    "roll_no": 44,
+    "prn": "2410048",
+    "full_name": "Prasad Rajaram Atpadkar",
+    "email": "2410048@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 45,
+  "fields": {
+    "roll_no": 45,
+    "prn": "2410049",
+    "full_name": "Abhishik Kambale",
+    "email": "2410049@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 46,
+  "fields": {
+    "roll_no": 46,
+    "prn": "2410050",
+    "full_name": "Sakshi Raut",
+    "email": "2410050@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 47,
+  "fields": {
+    "roll_no": 47,
+    "prn": "2410052",
+    "full_name": "Atharva Bhanudas Khanaj",
+    "email": "2410052@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 48,
+  "fields": {
+    "roll_no": 48,
+    "prn": "2410053",
+    "full_name": "Bhavan Redekar",
+    "email": "2410053@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 49,
+  "fields": {
+    "roll_no": 49,
+    "prn": "2410054",
+    "full_name": "Prajakta Ombase",
+    "email": "2410054@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 50,
+  "fields": {
+    "roll_no": 50,
+    "prn": "2410055",
+    "full_name": "Isha Ramchandra Mali",
+    "email": "2410055@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 51,
+  "fields": {
+    "roll_no": 51,
+    "prn": "2410056",
+    "full_name": "Pooja Avinash Hankare",
+    "email": "2410056@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 52,
+  "fields": {
+    "roll_no": 52,
+    "prn": "2410057",
+    "full_name": "Shreyas Deepak Bedke",
+    "email": "2410057@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 53,
+  "fields": {
+    "roll_no": 53,
+    "prn": "2410058",
+    "full_name": "Omkar Narayan Thite",
+    "email": "2410058@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 54,
+  "fields": {
+    "roll_no": 54,
+    "prn": "2410059",
+    "full_name": "Srushti Wagamode",
+    "email": "2410059@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 55,
+  "fields": {
+    "roll_no": 55,
+    "prn": "2410060",
+    "full_name": "Suraksha Patil",
+    "email": "2410060@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 56,
+  "fields": {
+    "roll_no": 56,
+    "prn": "2410062",
+    "full_name": "Mali Dhairyashil Deepak",
+    "email": "2410062@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 57,
+  "fields": {
+    "roll_no": 57,
+    "prn": "2410063",
+    "full_name": "Birajdar Shubham Vivekanand",
+    "email": "2410063@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 58,
+  "fields": {
+    "roll_no": 58,
+    "prn": "2410064",
+    "full_name": "Jadhav Siddhesh Rudrakar",
+    "email": "2410064@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 59,
+  "fields": {
+    "roll_no": 59,
+    "prn": "2410066",
+    "full_name": "Shipra Singh",
+    "email": "2410066@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 60,
+  "fields": {
+    "roll_no": 60,
+    "prn": "2410067",
+    "full_name": "Sanika Tukaram Patil",
+    "email": "2410067@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 61,
+  "fields": {
+    "roll_no": 61,
+    "prn": "2410068",
+    "full_name": "Rushikesh Ashtekar",
+    "email": "2410068@ritindia.edu",
+    "mobile": "957967458-",
+    "gender": "Male",
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 62,
+  "fields": {
+    "roll_no": 62,
+    "prn": "2410069",
+    "full_name": "Bhumika Bharat Powar",
+    "email": "2410069@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 63,
+  "fields": {
+    "roll_no": 63,
+    "prn": "2410070",
+    "full_name": "Inamdar Mohamedhasan Noormohammad",
+    "email": "2410070@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 64,
+  "fields": {
+    "roll_no": 64,
+    "prn": "2410074",
+    "full_name": "Anushka Mane",
+    "email": "2410074@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 65,
+  "fields": {
+    "roll_no": 65,
+    "prn": "2560001",
+    "full_name": "Pratik More",
+    "email": "2560001@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 66,
+  "fields": {
+    "roll_no": 66,
+    "prn": "2560002",
+    "full_name": "Sanjana Dadaso Sapkal",
+    "email": "2560002@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 67,
+  "fields": {
+    "roll_no": 67,
+    "prn": "2560003",
+    "full_name": "Aarya Vikram Patil Kurle",
+    "email": "2560003@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 68,
+  "fields": {
+    "roll_no": 68,
+    "prn": "2560005",
+    "full_name": "Prathamesh Shirgupe",
+    "email": "2560005@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 69,
+  "fields": {
+    "roll_no": 69,
+    "prn": "2560006",
+    "full_name": "Anuja Kumar Sathe",
+    "email": "2560006@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 70,
+  "fields": {
+    "roll_no": 70,
+    "prn": "2560007",
+    "full_name": "Sakshi Santosh Shinde",
+    "email": "2560007@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 71,
+  "fields": {
+    "roll_no": 71,
+    "prn": "2560008",
+    "full_name": "Tejal Mahesh Inamdar",
+    "email": "2560008@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 72,
+  "fields": {
+    "roll_no": 72,
+    "prn": "2560009",
+    "full_name": "Sahil Jarag",
+    "email": "2560009@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 73,
+  "fields": {
+    "roll_no": 73,
+    "prn": "2560010",
+    "full_name": "Gauri Dhanaji Bankar",
+    "email": "2560010@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+},
+{
+  "model": "accounts.student",
+  "pk": 74,
+  "fields": {
+    "roll_no": 74,
+    "prn": "2560011",
+    "full_name": "Rajwardhan Jagadale",
+    "email": "2560011@ritindia.edu",
+    "mobile": null,
+    "gender": null,
+    "academic_year": "2025-26",
+    "year": "TY",
+    "branch": "IT",
+    "division": null,
+    "password": null,
+    "profile_photo": null,
+    "status": "Active",
+    "created_at": "2026-08-15T12:39:12Z"
+  }
+}
+]
