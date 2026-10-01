@@ -102,20 +102,13 @@ TEMPLATES = [
 # DATABASE CONFIGURATION
 # ============================================================
 
+# ============================================================
+# DATABASE CONFIGURATION
+# ============================================================
+
 import dj_database_url
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-if DATABASE_URL:
-    # Render / Production → PostgreSQL
-    DATABASES = {
-        "default": dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True,
-        )
-    }
-else:
+if DEBUG:
     # Local Development → MySQL
     DATABASES = {
         "default": {
@@ -141,6 +134,16 @@ else:
                 "3306",
             ),
         }
+    }
+
+else:
+    # Render / Production → PostgreSQL
+    DATABASES = {
+        "default": dj_database_url.parse(
+            os.environ.get("DATABASE_URL"),
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
 
 # ============================================================
