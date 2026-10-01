@@ -12,10 +12,13 @@ from datetime import datetime
 from django.http import HttpResponse
 from openpyxl import Workbook
 import io
+import json
+import time
 import fitz
 from openpyxl import Workbook, load_workbook
 import os
 import re
+
 
 from PyPDF2 import PdfReader
 from PIL import Image, ImageOps, ImageEnhance, ImageFilter
@@ -2181,60 +2184,113 @@ def confirm_certificate(request):
     # CREATE CERTIFICATE DATABASE RECORD
     # --------------------------------------------------------
 
-    Certificate.objects.create(
+    certificate_file_name = (
+        f'certificates/{pending["temp_filename"]}'
+    )
+
+    certificate = Certificate.objects.create(
         student=student,
         activity=activity,
-        certificate_file=
-            f'certificates/{pending["temp_filename"]}',
+        certificate_file=certificate_file_name,
         verification_status='Pending',
         upload_date=timezone.now(),
     )
 
     # --------------------------------------------------------
-    # ADD EXTRACTED DATA TO EXCEL
+    # PREPARE EXTRACTED OCR DATA
     # --------------------------------------------------------
 
     excel_data = {
-        'year': pending.get(
-            'year',
-            ''
-        ),
-
-        'date': pending.get(
-            'date',
-            ''
-        ),
-
-        'time': pending.get(
-            'time',
-            ''
-        ),
-
-        'prn': pending.get(
-            'prn',
-            ''
-        ),
-
+        'year': pending.get('year', ''),
+        'date': pending.get('date', ''),
+        'time': pending.get('time', ''),
+        'prn': pending.get('prn', ''),
         'participant_name': pending.get(
             'participant_name',
             ''
         ),
-
-        'branch': pending.get(
-            'branch',
-            ''
-        ),
-
+        'branch': pending.get('branch', ''),
         'event_type': pending.get(
             'event_type',
             ''
         ),
-
         'college_name': pending.get(
             'college_name',
             ''
         ),
     }
+
+    # --------------------------------------------------------
+    # SAVE OCR MAPPING FOR FACULTY
+    # --------------------------------------------------------
+
+    ocr_directory = os.path.join(
+        settings.MEDIA_ROOT,
+        'excel'
+    )
+
+    os.makedirs(
+        ocr_directory,
+        exist_ok=True
+    )
+
+    ocr_mapping_path = os.path.join(
+        ocr_directory,
+        'certificate_extracted_data.json'
+    )
+
+    certificate_extracted_data = {}
+
+    if os.path.exists(ocr_mapping_path):
+
+        try:
+
+            with open(
+                ocr_mapping_path,
+                'r',
+                encoding='utf-8'
+            ) as json_file:
+
+                certificate_extracted_data = json.load(
+                    json_file
+                )
+
+        except (
+            json.JSONDecodeError,
+            OSError
+        ):
+
+            certificate_extracted_data = {}
+
+    certificate_extracted_data[
+        certificate_file_name
+    ] = excel_data
+
+    try:
+
+        with open(
+            ocr_mapping_path,
+            'w',
+            encoding='utf-8'
+        ) as json_file:
+
+            json.dump(
+                certificate_extracted_data,
+                json_file,
+                ensure_ascii=False,
+                indent=4
+            )
+
+    except OSError as error:
+
+        print(
+            "Certificate OCR mapping save error:",
+            error
+        )
+
+    # --------------------------------------------------------
+    # ADD EXTRACTED DATA TO EXCEL
+    # --------------------------------------------------------
 
     append_certificate_to_excel(
         excel_data
@@ -2711,8 +2767,18 @@ def download_extracted_certificate_excel(request):
     return response
 
 @login_required
-def download_certificate_excel_for_faculty(request, certificate_id):
-    """Download the 8 extracted fields for one specific certificate."""
+def download_certificate_excel_for_faculty(
+    request,
+    certificate_id
+):
+    """
+    Download the exact 8 certificate fields extracted
+    during the student's upload.
+
+    The function first checks the saved OCR mapping.
+    For older certificates without a saved mapping,
+    it falls back to OCR on the certificate file.
+    """
 
     # ---------------------------------------------------------
     # Get the selected certificate
@@ -2732,35 +2798,76 @@ def download_certificate_excel_for_faculty(request, certificate_id):
         )
 
     # ---------------------------------------------------------
-    # Get the actual certificate file
+    # Read OCR values saved during certificate confirmation
     # ---------------------------------------------------------
 
-    certificate_path = os.path.join(
+    ocr_directory = os.path.join(
         settings.MEDIA_ROOT,
-        str(certificate.certificate_file)
+        "excel"
     )
 
-    if not os.path.exists(certificate_path):
-        return HttpResponse(
-            "Certificate file not found.",
-            status=404
+    ocr_mapping_path = os.path.join(
+        ocr_directory,
+        "certificate_extracted_data.json"
+    )
+
+    extracted_data = {}
+
+    if os.path.exists(ocr_mapping_path):
+        try:
+            with open(
+                ocr_mapping_path,
+                "r",
+                encoding="utf-8"
+            ) as json_file:
+                certificate_extracted_data = json.load(
+                    json_file
+                )
+
+            certificate_key = str(
+                certificate.certificate_file
+            )
+
+            extracted_data = (
+                certificate_extracted_data.get(
+                    certificate_key,
+                    {}
+                )
+            )
+
+        except (
+            json.JSONDecodeError,
+            OSError
+        ):
+            extracted_data = {}
+
+    # ---------------------------------------------------------
+    # Fallback for older certificates
+    # ---------------------------------------------------------
+
+    if not extracted_data:
+
+        certificate_path = os.path.join(
+            settings.MEDIA_ROOT,
+            str(certificate.certificate_file)
         )
 
-    # ---------------------------------------------------------
-    # Extract text from this particular certificate
-    # ---------------------------------------------------------
+        if os.path.exists(certificate_path):
+            try:
+                certificate_text = (
+                    extract_certificate_text(
+                        certificate_path
+                    )
+                )
 
-    certificate_text = extract_certificate_text(
-        certificate_path
-    )
+                extracted_data = (
+                    extract_all_certificate_fields(
+                        certificate_text
+                    )
+                )
 
-    # ---------------------------------------------------------
-    # Extract all 8 fields
-    # ---------------------------------------------------------
-
-    extracted_data = extract_all_certificate_fields(
-        certificate_text
-    )
+            except Exception:
+                extracted_data = {}
 
     # ---------------------------------------------------------
     # Create Excel workbook
@@ -2820,7 +2927,9 @@ def download_certificate_excel_for_faculty(request, certificate_id):
     }
 
     for column, width in column_widths.items():
-        worksheet.column_dimensions[column].width = width
+        worksheet.column_dimensions[
+            column
+        ].width = width
 
     # ---------------------------------------------------------
     # Return Excel file
@@ -2834,7 +2943,9 @@ def download_certificate_excel_for_faculty(request, certificate_id):
     )
 
     response["Content-Disposition"] = (
-        f'attachment; filename="Certificate_{certificate_id}_Extracted_Data.xlsx"'
+        f'attachment; '
+        f'filename="Certificate_'
+        f'{certificate_id}_Extracted_Data.xlsx"'
     )
 
     workbook.save(response)
