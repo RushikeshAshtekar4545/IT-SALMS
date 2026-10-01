@@ -2772,12 +2772,11 @@ def download_certificate_excel_for_faculty(
     certificate_id
 ):
     """
-    Download the exact 8 certificate fields extracted
-    during the student's upload.
+    Download the 8 certificate fields for faculty.
 
-    The function first checks the saved OCR mapping.
-    For older certificates without a saved mapping,
-    it falls back to OCR on the certificate file.
+    The certificate file is read directly and the same OCR
+    extraction pipeline used by student certificate upload is
+    applied again.
     """
 
     # ---------------------------------------------------------
@@ -2798,76 +2797,44 @@ def download_certificate_excel_for_faculty(
         )
 
     # ---------------------------------------------------------
-    # Read OCR values saved during certificate confirmation
+    # Locate certificate file
     # ---------------------------------------------------------
 
-    ocr_directory = os.path.join(
+    certificate_path = os.path.join(
         settings.MEDIA_ROOT,
-        "excel"
+        str(certificate.certificate_file)
     )
 
-    ocr_mapping_path = os.path.join(
-        ocr_directory,
-        "certificate_extracted_data.json"
-    )
+    # ---------------------------------------------------------
+    # Check whether the file exists
+    # ---------------------------------------------------------
+
+    if not os.path.exists(certificate_path):
+        return HttpResponse(
+            "Certificate file not found on the server.",
+            status=404
+        )
+
+    # ---------------------------------------------------------
+    # Extract certificate text using existing OCR pipeline
+    # ---------------------------------------------------------
 
     extracted_data = {}
 
-    if os.path.exists(ocr_mapping_path):
-        try:
-            with open(
-                ocr_mapping_path,
-                "r",
-                encoding="utf-8"
-            ) as json_file:
-                certificate_extracted_data = json.load(
-                    json_file
-                )
-
-            certificate_key = str(
-                certificate.certificate_file
-            )
-
-            extracted_data = (
-                certificate_extracted_data.get(
-                    certificate_key,
-                    {}
-                )
-            )
-
-        except (
-            json.JSONDecodeError,
-            OSError
-        ):
-            extracted_data = {}
-
-    # ---------------------------------------------------------
-    # Fallback for older certificates
-    # ---------------------------------------------------------
-
-    if not extracted_data:
-
-        certificate_path = os.path.join(
-            settings.MEDIA_ROOT,
-            str(certificate.certificate_file)
+    try:
+        certificate_text = extract_certificate_text(
+            certificate_path
         )
 
-        if os.path.exists(certificate_path):
-            try:
-                certificate_text = (
-                    extract_certificate_text(
-                        certificate_path
-                    )
-                )
-
-                extracted_data = (
-                    extract_all_certificate_fields(
-                        certificate_text
-                    )
-                )
-
-            except Exception:
-                extracted_data = {}
+        extracted_data = extract_all_certificate_fields(
+            certificate_text
+        )
+        
+    except Exception as error:
+        return HttpResponse(
+            f"Certificate extraction failed: {str(error)}",
+            status=500
+        )
 
     # ---------------------------------------------------------
     # Create Excel workbook
@@ -2922,14 +2889,12 @@ def download_certificate_excel_for_faculty(
         "D": 18,
         "E": 30,
         "F": 25,
-        "G": 25,
+        "G": 30,
         "H": 40,
     }
 
     for column, width in column_widths.items():
-        worksheet.column_dimensions[
-            column
-        ].width = width
+        worksheet.column_dimensions[column].width = width
 
     # ---------------------------------------------------------
     # Return Excel file
